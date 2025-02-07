@@ -288,13 +288,21 @@ data:extend({
     energy_required = 60,
     enabled = false,
     category = "centrifuging",
-    ingredients = {{"used-up-tritium-breeder-fuel-cell", 5}, {"plastic-bar", 5}},
+    ingredients = 
+    {
+        {type="item", name="used-up-tritium-breeder-fuel-cell", amount=5},
+        {type="item", name="plastic-bar", amount=5}
+    },
     icon = nuke_graphics("tritium-extraction.png"),
     icon_size = 64, icon_mipmaps = 1,
     subgroup = "intermediate-product",
     order = "r[uranium-processing]-cj[tritium-extraction]",
     main_product = "",
-    results = {{"tritium-canister", 1}, {"uranium-238", 3}},
+    results = 
+    {
+        {type="item", name="tritium-canister", amount=1},
+        {type="item", name="uranium-238", amount=3}
+    },
     allow_decomposition = false
     },
 
@@ -304,7 +312,11 @@ data:extend({
     energy_required = 30,
     enabled = false,
     category = "centrifuging",
-    ingredients = {{"used-up-advanced-tritium-breeder-fuel-cell", 2}, {"plastic-bar", 5}},
+    ingredients = 
+    {
+        {type="item", name="used-up-advanced-tritium-breeder-fuel-cell", amount=1},
+        {type="item", name="plastic-bar", amount=5}
+    },
     icons = {
         {icon = nuke_graphics("tritium-extraction.png"), icon_size = 64, icon_mipmaps = 4},
         {icon = nuke_graphics("plus-red.png"), icon_size = 32, scale = 0.333, shift = {10, -10}}
@@ -312,28 +324,52 @@ data:extend({
     subgroup = "intermediate-product",
     order = "r[uranium-processing]-cm[tritium-extraction]",
     main_product = "",
-    results = {{"tritium-canister", 1}, {"uranium-238", 2}, {name = nuke_materials.reflector, amount = 1, probability = 0.8}},
+    results = 
+    {
+        {type="item", name="tritium-canister", amount=1},
+        {type="item", name="uranium-238", amount=2},
+        {type="item", name=nuke_materials.reflector, probability = 0.8, amount=1}
+    },
     allow_decomposition = false
     },
     {
-    type = "recipe",
-    name = "advanced-tritium-breeder-fuel-cell",
-    energy_required = 15,
-    enabled = false,
-    category = "crafting-with-fluid",
-    ingredients = table.deepcopy(data.raw.recipe["uranium-fuel-cell"].ingredients),
-    result = "advanced-tritium-breeder-fuel-cell",
-    result_count = 10
+        type = "recipe",
+        name = "advanced-tritium-breeder-fuel-cell",
+        energy_required = 15,
+        enabled = false,
+        --subgroup = "intermediate-product",
+        category = "crafting-with-fluid",
+        ingredients = --replace this with a optional plugin for space age       
+        {
+            {type = "item", name = "iron-plate", amount = 10},
+            {type = "item", name = "uranium-235", amount = 1},
+            {type = "item", name = "uranium-238", amount = 19},
+            {type="fluid", name="water", amount=100},
+            {type = "item", name=nuke_materials.reflector,amount= 5}
+        },
+        results = 
+        {
+            {type="item", name="advanced-tritium-breeder-fuel-cell", amount=10}
+        },
     },
     {
-    type = "recipe",
-    name = "tritium-breeder-fuel-cell",
-    energy_required = 10,
-    enabled = false,
-    category = "crafting-with-fluid",
-    ingredients = table.deepcopy(data.raw.recipe["uranium-fuel-cell"].ingredients),
-    result = "tritium-breeder-fuel-cell",
-    result_count = 10
+        type = "recipe",
+        name = "tritium-breeder-fuel-cell",
+        energy_required = 10,
+        enabled = false,
+        category = "crafting-with-fluid",
+        ingredients = 
+        {--replace this with a optional plugin for space age
+            {type = "item", name = "iron-plate", amount = 10},
+            {type = "item", name = "uranium-235", amount = 1},
+            {type = "item", name = "uranium-238", amount = 19},
+            {type="fluid", name="water", amount=100}
+        },
+        subgroup = "intermediate-product",
+        results = 
+        {
+            {type="item", name="tritium-breeder-fuel-cell", amount=10}
+        },
     },
     {
     type = "item",
@@ -365,9 +401,12 @@ data:extend({
     stack_size = 50
     }
 })
+--OUTDATED--
+--[[
 table.insert(data.raw.recipe["tritium-breeder-fuel-cell"].ingredients, {type="fluid", name="water", amount=100})
 table.insert(data.raw.recipe["advanced-tritium-breeder-fuel-cell"].ingredients, {type="fluid", name="water", amount=100})
 table.insert(data.raw.recipe["advanced-tritium-breeder-fuel-cell"].ingredients, {nuke_materials.reflector, 5})
+]]
 end
 for i = 0,100 do
 if(data.raw.module["productivity-module-" .. i] and data.raw.module["productivity-module-" .. i].limitation) then
